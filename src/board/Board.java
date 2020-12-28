@@ -12,12 +12,12 @@ public class Board {
         this.init();
         this.initWithCoordinates();
     }
-    public void init(){
+    private void init(){
         for( int i = 0 ; i < size ; i++ ){
             board.add(new ArrayList<Coordinate>());
         }
     }
-    public void initWithCoordinates(){
+    private void initWithCoordinates(){
         for(int i = 0 ; i < size ; i++){
             for(int j = 0 ; j < size ; j++){
                 board.get(i).add(new Coordinate.EmptyCoordinate(i+1,j+1));

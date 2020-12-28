@@ -1,3 +1,7 @@
+package ShipsManagement;
+
+import board.Coordinate;
+
 import java.util.ArrayList;
 
 import static java.lang.Math.abs;
@@ -9,7 +13,7 @@ public class ShipsContainer {
     }
     public void addShip(int x1, int x2, int y1, int y2){
         ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
-        ArrayList<Coordinate> occupiedCoordinates = new ArrayList<Coordinate>();
+        ArrayList<Coordinate> unavailableCoordinates = new ArrayList<Coordinate>();
 
         /*Checking orientation*/
         if (x1 != x2){
@@ -25,7 +29,7 @@ public class ShipsContainer {
         int diff = abs(y2-y1);
         ArrayList<Coordinate> tmp = new ArrayList<Coordinate>();
         for( int i = 0 ; i <= diff ; i++){
-            tmp.add(new Coordinate(x,y1+diff));
+            tmp.add(new Coordinate.OccupiedCoordinate(x,y1+diff));
         }
         return tmp;
     }
@@ -34,12 +38,12 @@ public class ShipsContainer {
         int diff = abs(x2-x1);
         ArrayList<Coordinate> tmp = new ArrayList<Coordinate>();
         for( int i = 0 ; i <= diff ; i++){
-            tmp.add(new Coordinate(x1+diff,y));
+            tmp.add(new Coordinate.OccupiedCoordinate(x1+diff,y));
         }
         return tmp;
     }
 
-    private void setOccupiedCoordinates(){
+    private void setUnavailableCoordinates(){
 
     }
 
