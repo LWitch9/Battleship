@@ -18,21 +18,22 @@ public class ShipsManagement {
         setPossibleSizesOfShips();
         this.board = new Board();
     }
+
     public void setShip(int x1, int x2, int y1, int y2){
         //TODO
         /*
-        * Requirements:
-        * -Check if coordinates are compatible with board size
-        * -Check ships orientation (if it is horizontal or vertical) if x1!=x2 and y1!=y2 - WrongOrientation!
-        * -Check ship's size ( Could it be placed? Or they are all possible ships of that size placed already)
-        * -Check if chosen coordinates are Empty and Available to set
-        *
-        * If all conditions are met:
-        * - add objects OccupiedCoordinates to required place on board
-        * - add objects UnavailableCoordinates ( some function will be needed )
-        * - prepare list of OccupiedCoordinates and add Ship
-        *
-        * */
+         * Requirements:
+         * -Check if coordinates are compatible with board size
+         * -Check ships orientation (if it is horizontal or vertical) if x1!=x2 and y1!=y2 - WrongOrientation!
+         * -Check ship's size ( Could it be placed? Or they are all possible ships of that size placed already)
+         * -Check if chosen coordinates are Empty and Available to set
+         *
+         * If all conditions are met:
+         * - add objects OccupiedCoordinates to required place on board
+         * - add objects UnavailableCoordinates ( some function will be needed )
+         * - prepare list of OccupiedCoordinates and add Ship
+         *
+         * */
         boolean lessOrEqualsSize = x1 <= board.getSize() && x2 <= board.getSize() && y1 <= board.getSize() && y2 <= board.getSize();
         boolean moreOrEqualsOne = x1 >= 1 && x2 >= 1 && y1 >= 1 && y2 >= 1;
 
@@ -71,7 +72,7 @@ public class ShipsManagement {
             else {
                 Ship ship;
                 if(isOrientationVertical){
-                   ship =  setVertically(x1,y1,shipLength);
+                    ship =  setVertically(x1,y1,shipLength);
                 }
                 else{
                     ship = setHorizontally(x1,y1, shipLength);
@@ -91,6 +92,20 @@ public class ShipsManagement {
             }
         }
     }
+    public void hit(int x1, int y1){
+        //TODO
+        /*
+         * Check:
+         * - On board - if chosen coordinates are Empty or Occupied
+         * - If occupied - search for choosen coordinate in ShipContainer
+         *   There will be needed some better mechanisim for searching and checking if
+         *   ship were completly drowned or just hit
+         * - After checking - set chosen Coordinate in Ship to EmptyCoordinate / or maybe remove completly
+         *   set chosen Coordinate Board to EmptyCoordinate
+         *
+         * */
+    }
+
     private Ship setVertically(int x, int y1, int diff){
 
         ArrayList<Coordinate> tmp = new ArrayList<Coordinate>();
@@ -121,7 +136,6 @@ public class ShipsManagement {
 
         return new Ship(tmp);
     }
-
     private Ship setHorizontally(int x1, int y, int diff){
 
         ArrayList<Coordinate> tmp = new ArrayList<Coordinate>();
@@ -150,19 +164,6 @@ public class ShipsManagement {
 
         return new Ship(tmp);
     }
-    public void hit(int x1, int y1){
-        //TODO
-        /*
-         * Check:
-         * - On board - if chosen coordinates are Empty or Occupied
-         * - If occupied - search for choosen coordinate in ShipContainer
-         *   There will be needed some better mechanisim for searching and checking if
-         *   ship were completly drowned or just hit
-         * - After checking - set chosen Coordinate in Ship to EmptyCoordinate / or maybe remove completly
-         *   set chosen Coordinate Board to EmptyCoordinate
-         *
-         * */
-    }
     private void setPossibleSizesOfShips(){
         for( int i = 1 ; i <= 4 ; i++ ){
             for(int j=4-i+1 ; j >= 1 ; j--){
@@ -170,5 +171,4 @@ public class ShipsManagement {
             }
         }
     }
-
 }
