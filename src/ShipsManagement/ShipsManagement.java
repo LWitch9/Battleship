@@ -19,7 +19,7 @@ public class ShipsManagement {
         this.board = new Board();
     }
 
-    public void setShip(int x1, int x2, int y1, int y2){
+    public void setShip(int x1, int y1, int x2, int y2){
         //TODO
         /*
          * Requirements:
@@ -55,7 +55,7 @@ public class ShipsManagement {
                 isOrientationVertical = false;
                 shipLength = abs(x2 - x1) +1 ;
                 // TODO is that necessary
-                if(x2 > x1){
+                if(x1 > x2){
                     tmp =x1;
                     x1 = x2;
                     x2 = tmp;
@@ -64,6 +64,11 @@ public class ShipsManagement {
             else{ //Checking orientation (vertical) - includes also ships of size 1
                 isOrientationVertical = true;
                 shipLength = abs(y2 - y1) +1 ;
+                if(y1 > y2) {
+                    tmp = y1;
+                    y1 = y2;
+                    y2 = tmp;
+                }
             }
 
             if(!possibleSizesOfShips.contains(shipLength)){
@@ -85,6 +90,7 @@ public class ShipsManagement {
                     System.out.println("Ship successfully added");
                     possibleSizesOfShips.remove(shipLength);
                     shipsContainer.addShip(ship);
+                    board.showAvailablity();
                 }
             }
         }
@@ -107,12 +113,14 @@ public class ShipsManagement {
             shipsContainer.removeCoordinateFromShip(x,y);
             board.setUnavailableCoordinateAt(x,y);
         }
+        else{
+            System.out.println("Pudlo");
+        }
 
 
     }
 
     private Ship setVertically(int x, int y1, int diff){
-
         ArrayList<Coordinate> tmp = new ArrayList<Coordinate>();
         //Check if available
         for( int i = 0 ; i < diff ; i++){
@@ -147,7 +155,6 @@ public class ShipsManagement {
         //Check if available
         for( int i = 0 ; i < diff ; i++){
             if(!board.getCoordinate(x1+i,y).isSetAvailable()){
-                System.out.println("Coordinate unavailable");
                 return null;
             }
         }

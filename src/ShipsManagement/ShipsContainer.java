@@ -21,13 +21,16 @@ public class ShipsContainer {
                 if(ship.getShipSize() == 0){
                     //Zatopiony TODO some information about Zatopiony state
                     removeShip(ship);
+                    System.out.println("Zatopiony!");
                 }
                 else{
                     //Trafiony
+                    System.out.println("Trafiony!");
                 }
-                break;
+                return;
             }
         }
+        System.out.println("Pudlo!");
     }
 
     private void removeShip(Ship ship){

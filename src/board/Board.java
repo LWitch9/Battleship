@@ -24,23 +24,31 @@ public class Board {
             }
         }
     }
+    public void showAvailablity(){
+        for(int i = 0 ; i < size ; i++){
+            for(int j = 0 ; j < size ; j++){
+                System.out.print(board.get(j).get(i).isOccupied()+"  ");
+            }
+            System.out.println();
+        }
+    }
 
     public int getSize() {
         return size;
     }
 
     public Coordinate getCoordinate(int x, int y) {
-        return board.get(x).get(y);
+        return board.get(x-1).get(y-1);
     }
 
     public void setOccupiedCoordinateAt(int x, int y){
 
-        board.get(x).set(y,new Coordinate.OccupiedCoordinate(x,y));
+        board.get(x-1).set(y-1,new Coordinate.OccupiedCoordinate(x,y));
     }
     public void setUnavailableCoordinateAt(int x, int y){
-        board.get(x).set(y,new Coordinate.UnavailableCoordinate(x,y));
+        board.get(x-1).set(y-1,new Coordinate.UnavailableCoordinate(x,y));
     }
     public void setEmptyCoordinateAt(int x, int y){
-        board.get(x).set(y,new Coordinate.EmptyCoordinate(x,y));
+        board.get(x-1).set(y-1,new Coordinate.EmptyCoordinate(x,y));
     }
 }
