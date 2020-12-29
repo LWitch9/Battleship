@@ -86,13 +86,10 @@ public class ShipsManagement {
                     possibleSizesOfShips.remove(shipLength);
                     shipsContainer.addShip(ship);
                 }
-                // prepare coordinates that will be set
-                //If they are, remove shipLength from possibleSizeOfShips
-
             }
         }
     }
-    public void hit(int x1, int y1){
+    public void hit(int x, int y){
         //TODO
         /*
          * Check:
@@ -104,6 +101,14 @@ public class ShipsManagement {
          *   set chosen Coordinate Board to EmptyCoordinate
          *
          * */
+
+        Coordinate onBoardCoord = board.getCoordinate(x,y);
+        if(onBoardCoord.isOccupied()){ //TODO should I also check if This Coordinate was hit earlier
+            shipsContainer.removeCoordinateFromShip(x,y);
+            board.setUnavailableCoordinateAt(x,y);
+        }
+
+
     }
 
     private Ship setVertically(int x, int y1, int diff){

@@ -14,15 +14,12 @@ public class ShipsContainer {
     public void addShip(Ship ship){
         shipsCollection.add(ship);
     }
-    public void removeShip(Ship ship){
-        this.shipsCollection.remove(ship);
-    }
     public void removeCoordinateFromShip(int x, int y){
         Ship tmp;
         for(Ship ship :shipsCollection){
             if(ship.removeCoordinate(x,y)){
                 if(ship.getShipSize() == 0){
-                    //Zatopiony
+                    //Zatopiony TODO some information about Zatopiony state
                     removeShip(ship);
                 }
                 else{
@@ -32,5 +29,10 @@ public class ShipsContainer {
             }
         }
     }
+
+    private void removeShip(Ship ship){
+        this.shipsCollection.remove(ship);
+    }
+
 
 }
