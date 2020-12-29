@@ -9,12 +9,17 @@ public abstract class Coordinate {
         this.y = y;
     }
 
+    //TODO maybe remove getters for x and y (replace it with toString method)
     public int getX() {
         return x;
     }
 
     public int getY() {
         return y;
+    }
+
+    public String toString(){
+        return "" + (char)(x+64) + y;
     }
 
     public abstract boolean isOccupied();

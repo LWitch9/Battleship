@@ -24,4 +24,23 @@ public class Board {
             }
         }
     }
+
+    public int getSize() {
+        return size;
+    }
+
+    public Coordinate getCoordinate(int x, int y) {
+        return board.get(x).get(y);
+    }
+
+    public void setOccupiedCoordinateAt(int x, int y){
+
+        board.get(x).set(y,new Coordinate.OccupiedCoordinate(x,y));
+    }
+    public void setUnavailableCoordinateAt(int x, int y){
+        board.get(x).set(y,new Coordinate.UnavailableCoordinate(x,y));
+    }
+    public void setEmptyCoordinateAt(int x, int y){
+        board.get(x).set(y,new Coordinate.EmptyCoordinate(x,y));
+    }
 }
