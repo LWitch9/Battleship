@@ -1,7 +1,7 @@
 package player;
 
 import ShipsManagement.ShipsManagement;
-import board.Board;
+import board.BoardModel;
 
 public class Player {
     private final String name;

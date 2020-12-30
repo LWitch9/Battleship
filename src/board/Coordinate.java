@@ -25,7 +25,7 @@ public abstract class Coordinate {
     public abstract boolean isOccupied();
     public abstract boolean isSetAvailable();
 
-    public static final class  OccupiedCoordinate extends Coordinate {
+    public static final class  OccupiedCoordinate extends Coordinate{
 
         public OccupiedCoordinate(int x, int y) {
             super(x, y);
