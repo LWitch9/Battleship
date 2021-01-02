@@ -1,11 +1,11 @@
 #idea directory
-*/.idea
-/.idea
+#*/.idea
+#/.idea
 
 #out directory
 /out
 
-*.iml
+#*.iml
 # Compiled class file
 *.class
 
