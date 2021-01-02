@@ -1,6 +1,6 @@
 package ShipsManagement;
 
-import board.BoardModel;
+import board.Board;
 import board.Coordinate;
 
 import java.util.ArrayList;

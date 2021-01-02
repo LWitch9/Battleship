@@ -2,11 +2,11 @@ package board;
 
 import java.util.ArrayList;
 
-public class BoardModel {
+public class Board {
     private ArrayList<ArrayList<Coordinate>> board;
     private final int size;
 
-    public BoardModel() {
+    public Board() {
         this.size = 10;
         this.board = new ArrayList<>(size);
         this.init();
