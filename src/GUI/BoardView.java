@@ -16,12 +16,14 @@ public class BoardView extends JPanel{
     public BoardView() {
         //panel = new JPanel();
         boardFieldsCollection = new ArrayList<ArrayList<Field>>();
+        this.setPreferredSize( new Dimension( 640, 480 ) );
         this.init();
         this.addButtons();
     }
 
     private void addButtons() {
         GridLayout layout = new GridLayout(10,10);
+        this.setLayout(layout);
         //TODO get rid of blank spaces between buttons
         for(int i = 0; i < size; i++ ){
             for(int j = 0 ; j < size ; j++){
@@ -39,10 +41,10 @@ public class BoardView extends JPanel{
                     tmp.setText("" + (char)(i+65) + (j+1));
                 }
                 else if(i==0){
-                    tmp.setText("" +(j+1));
+                    tmp.setText("" + (char)(j+65));
                 }
                 else if(j==0){
-                    tmp.setText("" + (char)(i+65));
+                    tmp.setText("" +(i+1));
                 }
                 tmp.setBackground(Color.WHITE);
                 boardFieldsCollection.get(i).add(tmp);
