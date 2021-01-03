@@ -100,21 +100,15 @@ public class ShipsManagement {
                 }
 
             }
-            System.out.println("Dlugosc statku: "+shipLength);
+            //System.out.println("Dlugosc statku: "+shipLength);
 
             if(!possibleSizesOfShips.contains(""+shipLength)){
                 if(possibleSizesOfShips.isEmpty()){
-
-                    //TODO Do sth that will make resultCommunicat unchangeable after setting all ships
-                    //TODO Container/ Enum / or sth else for Messages
                     resultCommunicat = Messages.ALL_SHIPS_SET;
-
                     return;
                 }
-
                 else
                     resultCommunicat = Messages.WRONG_LENGTH;
-
             }
             else {
                 Ship ship;

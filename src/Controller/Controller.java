@@ -65,6 +65,7 @@ public class Controller {
                     isTimeForShootFaze =true;
                 }
                 else{
+                    clicked.removeAll(clicked);
                     game.setState(GameState.SHOOT_FAZE);
                     //TODO losowanie gracza - tymczasowo zaczyna drugi
                     game.setTurn(WhichPlayer.PLAYER2);
@@ -177,6 +178,9 @@ public class Controller {
                 //Success
                 //Put ship on view
                 setShipOnView(activeBoard,game.getTurn());
+                //TODO Dodaj coś aby wcześniej zmienić stan game.setState(GameState.SET_FAZE_END_FOR_PLAYER);
+                //Aktualnei stan zmienia się nie bezpośrednio po ustawieniu ostatniego statku
+                //a dopiero po tym jak kolejny raz kliknie się dwukrotnie (co zostanie odczytane jako niepoprawne ustawinie)
 
             }
             else{

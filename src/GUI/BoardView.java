@@ -54,7 +54,7 @@ public class BoardView extends JPanel{
                     tmp.setText("" + (char)(i+65));
                 }
                 tmp.setBackground(Color.WHITE);
-                tmp.setActionCommand("" + (char)(j+65) + (i+1));
+                tmp.setActionCommand("" + (char)(i+65) + (j+1));
                 boardFieldsCollection.get(i).add(tmp);
             }
         }
