@@ -25,7 +25,5 @@ public class Field extends JButton {
     public void changeColor(String color){
         //TODO
     }
-    public void changeState(String state){
-        //TODO change if it's disabled or not
-    }
+
 }

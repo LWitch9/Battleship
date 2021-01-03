@@ -27,7 +27,7 @@ public class BoardView extends JPanel{
         //TODO get rid of blank spaces between buttons
         for(int i = 0; i < size; i++ ){
             for(int j = 0 ; j < size ; j++){
-                this.add(boardFieldsCollection.get(i).get(j));
+                this.add(boardFieldsCollection.get(j).get(i));
             }
         }
     }
@@ -53,18 +53,25 @@ public class BoardView extends JPanel{
 
     }
 
-    //TODO Czy te funkcje powinny być w view czy w controllerze
-    public void changeStateOfAll(String state){
-
+    public void setAllEnabled(Boolean state){
+        for(int i = 0; i < size; i++ ){
+            for(int j = 0 ; j < size ; j++){
+                boardFieldsCollection.get(i).get(j).setEnabled(state);
+            }
+        }
     }
-    public void changeColorOfAll(String color){
-
+    public void changeColorOfAll(Color color){
+        for(int i = 0; i < size; i++ ){
+            for(int j = 0 ; j < size ; j++){
+                boardFieldsCollection.get(i).get(j).setBackground(color);
+            }
+        }
     }
-    public void changeStateOfSpecificField(int x, int y, String state){
-
+    public void setSpecificFieldEnabled(int x, int y, Boolean state){
+        boardFieldsCollection.get(x-1).get(y-1).setEnabled(state);
     }
-    public void changeColorOfSpecificField(int x, int y, String color){
-        boardFieldsCollection.get(x-1).get(y-1).setBackground(Color.decode(color));
+    public void changeColorOfSpecificField(int x, int y, Color color){
+        boardFieldsCollection.get(x-1).get(y-1).setBackground(color);
     }
     public Field getField(int x, int y){
         return boardFieldsCollection.get(x-1).get(y-1);
