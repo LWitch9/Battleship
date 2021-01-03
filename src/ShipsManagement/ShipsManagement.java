@@ -1,5 +1,6 @@
 package ShipsManagement;
 
+import Game.WhichPlayer;
 import board.Board;
 import board.Coordinate;
 
@@ -9,20 +10,31 @@ import static java.lang.Math.abs;
 
 public class ShipsManagement {
     private ShipsContainer shipsContainer;
-    private ArrayList<Integer> possibleSizesOfShips;
+    private ArrayList<String> possibleSizesOfShips;
     private Board board;
-    private String resultOfAction;
+    private String resultCommunicat;
+    private Boolean actionFinishedProperly;
+    private final WhichPlayer owner;
 
-    public ShipsManagement() {
+    public ShipsManagement(WhichPlayer owner) {
+        this.owner = owner;
         this.shipsContainer = new ShipsContainer();
-        this.possibleSizesOfShips = new ArrayList<Integer>();
-        this.resultOfAction = "";
+        this.possibleSizesOfShips = new ArrayList<String>();
+        this.resultCommunicat = "";
         setPossibleSizesOfShips();
         this.board = new Board();
     }
 
+    public WhichPlayer getOwner() {
+        return owner;
+    }
+
+    public ShipsContainer getShipsContainer() {
+        return shipsContainer;
+    }
+
     public void setShip(int x1, int y1, int x2, int y2){
-        //TODO
+
         /*
          * Requirements:
          * -Check if coordinates are compatible with board size
@@ -36,19 +48,19 @@ public class ShipsManagement {
          * - prepare list of OccupiedCoordinates and add Ship
          *
          * */
-        resultOfAction = "";
+        resultCommunicat = "";
+        actionFinishedProperly = false;
 
         boolean lessOrEqualsSize = x1 <= board.getSize() && x2 <= board.getSize() && y1 <= board.getSize() && y2 <= board.getSize();
         boolean moreOrEqualsOne = x1 >= 1 && x2 >= 1 && y1 >= 1 && y2 >= 1;
 
         if( ! ( lessOrEqualsSize && moreOrEqualsOne) ){
-            //TODO Out of range
-            resultOfAction = "Out of range";
+            resultCommunicat = "Out of range";
         }
         else if(x2 != x1 && y2 !=y1){
             // First condition met
             // Second condition Wrong orientation!
-            resultOfAction = "Wrong orientation";
+            resultCommunicat = "Wrong orientation";
         }
         else {
             //Second condition met - checking orientation and calculating length
@@ -58,7 +70,6 @@ public class ShipsManagement {
             if( x2 != x1 ){ //Checking orientation (horizontal)
                 isOrientationVertical = false;
                 shipLength = abs(x2 - x1) +1 ;
-                // TODO is that necessary
                 if(x1 > x2){
                     tmp =x1;
                     x1 = x2;
@@ -73,10 +84,19 @@ public class ShipsManagement {
                     y1 = y2;
                     y2 = tmp;
                 }
-            }
 
-            if(!possibleSizesOfShips.contains(shipLength)){
-                resultOfAction = "Wrong Length";
+            }
+            System.out.println("Dlugosc statku: "+shipLength);
+
+            if(!possibleSizesOfShips.contains(""+shipLength)){
+                if(possibleSizesOfShips.isEmpty()){
+                    //TODO Do sth that will make resultCommunicat unchangeable after setting all ships
+                    resultCommunicat = "Wszystko rozstawione";
+                    return;
+                }
+
+                else
+                    resultCommunicat = "Wrong Length";
             }
             else {
                 Ship ship;
@@ -88,24 +108,31 @@ public class ShipsManagement {
                 }
 
                 if(ship == null){
-                    resultOfAction = "Coordinate unavailable";
+                    resultCommunicat = "Coordinate unavailable";
                 }
                 else{
-                    resultOfAction = "Ship successfully added";
-                    possibleSizesOfShips.remove(shipLength);
+                    resultCommunicat = "Ship successfully added";
+                    actionFinishedProperly = true;
+                    possibleSizesOfShips.remove(""+shipLength);
                     shipsContainer.addShip(ship);
                     board.showAvailablity();
+                    for(String i : possibleSizesOfShips){
+                        System.out.println(i);
+                    }
                 }
             }
         }
     }
 
-    public String getResultOfAction() {
-        return resultOfAction;
+    public Boolean getActionFinishedProperly() {
+        return actionFinishedProperly;
+    }
+
+    public String getResultCommunicat() {
+        return resultCommunicat;
     }
 
     public void hit(int x, int y){
-        //TODO
         /*
          * Check:
          * - On board - if chosen coordinates are Empty or Occupied
@@ -118,7 +145,7 @@ public class ShipsManagement {
          * */
 
         Coordinate onBoardCoord = board.getCoordinate(x,y);
-        if(onBoardCoord.isOccupied()){ //TODO should I also check if This Coordinate was hit earlier
+        if(onBoardCoord.isOccupied()){
             shipsContainer.removeCoordinateFromShip(x,y);
             board.setUnavailableCoordinateAt(x,y);
         }
@@ -188,7 +215,7 @@ public class ShipsManagement {
     private void setPossibleSizesOfShips(){
         for( int i = 1 ; i <= 4 ; i++ ){
             for(int j=4-i+1 ; j >= 1 ; j--){
-                possibleSizesOfShips.add(i);
+                possibleSizesOfShips.add(""+i);
             }
         }
     }

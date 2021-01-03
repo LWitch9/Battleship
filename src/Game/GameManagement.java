@@ -1,23 +1,25 @@
 package Game;
 
+import ShipsManagement.ShipsManagement;
+
 public class GameManagement {
-    private final Player player1;
-    private final Player player2;
+    private final ShipsManagement player1;
+    private final ShipsManagement player2;
     private GameState state;
-    private WhichPlayer player;
+    private WhichPlayer turn;
 
     public GameManagement() {
-        this.player1 = new Player("Gracz1");
-        this.player2 = new Player("Gracz2");
+        this.player1 = new ShipsManagement(WhichPlayer.PLAYER1);
+        this.player2 = new ShipsManagement(WhichPlayer.PLAYER2);
         this.state = GameState.SET_FAZE;
-        this.player = WhichPlayer.PLAYER1;
+        this.turn = WhichPlayer.PLAYER1;
     }
 
-    public Player getPlayer1() {
+    public ShipsManagement getPlayer1() {
         return player1;
     }
 
-    public Player getPlayer2() {
+    public ShipsManagement getPlayer2() {
         return player2;
     }
 
@@ -29,11 +31,8 @@ public class GameManagement {
         this.state = state;
     }
 
-    public WhichPlayer getPlayer() {
-        return player;
+    public WhichPlayer getTurn() {
+        return turn;
     }
 
-    public void setPlayer(WhichPlayer player) {
-        this.player = player;
-    }
 }

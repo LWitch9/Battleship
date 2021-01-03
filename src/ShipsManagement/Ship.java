@@ -35,6 +35,10 @@ public class Ship {
     public int getShipSize(){
         return coordinates.size();
     }
+
+    public ArrayList<Coordinate> getCoordinates() {
+        return coordinates;
+    }
 }
 
 

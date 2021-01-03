@@ -1,5 +1,6 @@
 package GUI;
 
+import Game.WhichPlayer;
 import board.Coordinate;
 
 import javax.swing.*;
@@ -12,13 +13,19 @@ public class BoardView extends JPanel{
 
     private final int size = 10;
     private final ArrayList<ArrayList<Field>> boardFieldsCollection;
+    private final WhichPlayer player;
 
-    public BoardView() {
+    public BoardView(WhichPlayer player) {
         //panel = new JPanel();
+        this.player = player;
         boardFieldsCollection = new ArrayList<ArrayList<Field>>();
         this.setPreferredSize( new Dimension( 640, 480 ) );
         this.init();
         this.addButtons();
+    }
+
+    public WhichPlayer getPlayer() {
+        return player;
     }
 
     private void addButtons() {
@@ -40,10 +47,11 @@ public class BoardView extends JPanel{
                     tmp.setText("" + (char)(i+65) + (j+1));
                 }
                 else if(i==0){
-                    tmp.setText("" + (char)(j+65));
+                    tmp.setText("" +(j+1));
+
                 }
                 else if(j==0){
-                    tmp.setText("" +(i+1));
+                    tmp.setText("" + (char)(i+65));
                 }
                 tmp.setBackground(Color.WHITE);
                 tmp.setActionCommand("" + (char)(i+65) + (j+1));

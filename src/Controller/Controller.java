@@ -2,6 +2,9 @@ package Controller;
 
 import GUI.View;
 import Game.GameManagement;
+import Game.WhichPlayer;
+import ShipsManagement.ShipsManagement;
+import board.Coordinate;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,7 +14,7 @@ import java.util.ArrayList;
 public class Controller {
     private View view ;
     private GameManagement game ;
-    private ArrayList<String> clicked; //TODO it is temporarily here
+    private ArrayList<String> clicked;
 
     public Controller(View view , GameManagement game) {
         this.clicked = new ArrayList<>();
@@ -50,26 +53,49 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             System.out.println(e.getActionCommand());
             clicked.add(e.getActionCommand());
-           if(clicked.size()==2){
-                //Doing..
-                int x1,y1,x2,y2;
-
-                x1= clicked.get(0).charAt(0)-64;
-                y1 = Integer.parseInt(clicked.get(0).substring(1));
-
-                x2= clicked.get(1).charAt(0)-64;
-                y2 = Integer.parseInt(clicked.get(1).substring(1));
-
-                //TODO Add sth that will decide on which board it should be used
-                // or maybe make to ActionListener classes for each board
-                view.changeColorOfSpecificField(x1,y1,new Color(0,0,0));
-                view.changeColorOfSpecificField(x2,y2,new Color(0,0,0));
-
+            if(clicked.size()==2){
+                this.settingShipGrneral(clicked);
                 clicked.removeAll(clicked);
+            }
+
+
+
+        }
+
+        private void settingShipGrneral(ArrayList<String > clicked){
+            int x1,y1,x2,y2;
+
+            x1= clicked.get(0).charAt(0)-64;
+            y1 = Integer.parseInt(clicked.get(0).substring(1));
+
+            x2= clicked.get(1).charAt(0)-64;
+            y2 = Integer.parseInt(clicked.get(1).substring(1));
+
+            ShipsManagement actualPlayer;
+
+            if(game.getPlayer1().getOwner() == game.getTurn())
+                actualPlayer = game.getPlayer1();
+            else
+                actualPlayer = game.getPlayer2();
+
+            actualPlayer.setShip(x1,y1,x2,y2);
+            Boolean result = actualPlayer.getActionFinishedProperly();
+
+            view.displayMessageOnCommunicationLabel(actualPlayer.getResultCommunicat());
+            if(result){
+                //Success
+                //Put ship on view
+                setShipOnView(actualPlayer,game.getTurn());
+            }
+
+        }
+        private void setShipOnView(ShipsManagement actualPlayer, WhichPlayer turn){
+            for(Coordinate coor :actualPlayer.getShipsContainer().getLastShip().getCoordinates()){
+                view.changeColorOfSpecificField(coor.getX(),coor.getY(),new Color(0,0,0), turn);
+                view.setSpecificFieldEnabled(coor.getX(),coor.getY(),false, turn);
 
             }
-            //else nothing - wait for more coordinates
-            //TODO
+
         }
     }
 }

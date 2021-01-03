@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 
 public class Field extends JButton {
 
-    //TODO can i connect it with Coordinate? should i get rid of xp, yp here?
     public Field() {
 
         this.setPreferredSize(new Dimension(30,30));

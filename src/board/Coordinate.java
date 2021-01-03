@@ -9,7 +9,6 @@ public abstract class Coordinate {
         this.y = y;
     }
 
-    //TODO maybe remove getters for x and y (replace it with toString method)
     public int getX() {
         return x;
     }
