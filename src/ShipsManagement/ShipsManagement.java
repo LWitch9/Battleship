@@ -13,7 +13,7 @@ public class ShipsManagement {
     private ArrayList<String> possibleSizesOfShips;
     private Board board;
     private String resultCommunicat;
-    private Boolean actionFinishedProperly;
+    private Boolean actionFinishedSuccessfully;
     private final WhichPlayer owner;
 
     public ShipsManagement(WhichPlayer owner) {
@@ -49,7 +49,7 @@ public class ShipsManagement {
          *
          * */
         resultCommunicat = "";
-        actionFinishedProperly = false;
+        actionFinishedSuccessfully = false;
 
         boolean lessOrEqualsSize = x1 <= board.getSize() && x2 <= board.getSize() && y1 <= board.getSize() && y2 <= board.getSize();
         boolean moreOrEqualsOne = x1 >= 1 && x2 >= 1 && y1 >= 1 && y2 >= 1;
@@ -112,7 +112,7 @@ public class ShipsManagement {
                 }
                 else{
                     resultCommunicat = "Ship successfully added";
-                    actionFinishedProperly = true;
+                    actionFinishedSuccessfully = true;
                     possibleSizesOfShips.remove(""+shipLength);
                     shipsContainer.addShip(ship);
                     board.showAvailablity();
@@ -124,8 +124,8 @@ public class ShipsManagement {
         }
     }
 
-    public Boolean getActionFinishedProperly() {
-        return actionFinishedProperly;
+    public Boolean getActionFinishedSuccessfully() {
+        return actionFinishedSuccessfully;
     }
 
     public String getResultCommunicat() {
@@ -143,14 +143,16 @@ public class ShipsManagement {
          *   set chosen Coordinate Board to EmptyCoordinate
          *
          * */
+        actionFinishedSuccessfully = false;
 
         Coordinate onBoardCoord = board.getCoordinate(x,y);
         if(onBoardCoord.isOccupied()){
-            shipsContainer.removeCoordinateFromShip(x,y);
+            actionFinishedSuccessfully = true;
+            resultCommunicat = shipsContainer.removeCoordinateFromShip(x,y);
             board.setUnavailableCoordinateAt(x,y);
         }
         else{
-            System.out.println("Pudlo");
+            resultCommunicat="Pudlo";
         }
 
 

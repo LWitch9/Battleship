@@ -35,4 +35,7 @@ public class GameManagement {
         return turn;
     }
 
+    public void setTurn(WhichPlayer turn) {
+        this.turn = turn;
+    }
 }

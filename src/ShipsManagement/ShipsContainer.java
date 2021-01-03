@@ -14,23 +14,22 @@ public class ShipsContainer {
     public void addShip(Ship ship){
         shipsCollection.add(ship);
     }
-    public void removeCoordinateFromShip(int x, int y){
+    public String removeCoordinateFromShip(int x, int y){
         Ship tmp;
         for(Ship ship :shipsCollection){
             if(ship.removeCoordinate(x,y)){
                 if(ship.getShipSize() == 0){
                     //Zatopiony TODO some information about Zatopiony state
                     removeShip(ship);
-                    System.out.println("Zatopiony!");
+                    return "Trafiony Zatopiony!";
                 }
                 else{
                     //Trafiony
-                    System.out.println("Trafiony!");
+                    return "Trafiony!";
                 }
-                return;
             }
         }
-        System.out.println("Pudlo!");
+        return "Pudlo";
     }
     public Ship getLastShip(){
         return shipsCollection.get(shipsCollection.size()-1);

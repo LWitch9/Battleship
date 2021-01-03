@@ -20,9 +20,6 @@ public class View{
         this.frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addComponents(frame, new Color(139, 139, 135));
-        //setBoardEnabled(false, player1Buttons);
-        //setBoardColor(new Color(0,0,0), player2Buttons);
-        //changeColorOfSpecificField(2,7,new Color(0,0,0));
         frame.setSize(840, 650);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -127,11 +124,21 @@ public class View{
 
         frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
     }
-    public void setBoardEnabled(Boolean state, BoardView playerButtons){
-        playerButtons.setAllEnabled(state);
+    public void setBoardEnabled(Boolean state, WhichPlayer player){
+        if(player1Buttons.getPlayer() == player){
+            player1Buttons.setAllEnabled(state);
+        }
+        else{
+            player2Buttons.setAllEnabled(state);
+        }
     }
-    public void setBoardColor(Color color,BoardView playerButtons){
-        playerButtons.changeColorOfAll(color);
+    public void setBoardColor(Color color,WhichPlayer player){
+        if(player1Buttons.getPlayer() == player){
+            player1Buttons.changeColorOfAll(color);
+        }
+        else{
+            player2Buttons.changeColorOfAll(color);
+        }
     }
 
     public void setSpecificFieldEnabled(int x, int y, Boolean state, WhichPlayer player){
