@@ -32,6 +32,9 @@ public class ShipsContainer {
         }
         System.out.println("Pudlo!");
     }
+    public Ship getLastShip(){
+        return shipsCollection.get(shipsCollection.size()-1);
+    }
 
     private void removeShip(Ship ship){
         this.shipsCollection.remove(ship);

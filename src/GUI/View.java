@@ -1,6 +1,7 @@
 package GUI;
 
 import Controller.Controller;
+import Game.WhichPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -60,12 +61,12 @@ public class View{
         boardsPanel.setLayout(boardsLayout);
 
         boardsPanel.add(Box.createRigidArea(new Dimension(60, 300)));
-        player1Buttons = new BoardView();
+        player1Buttons = new BoardView(WhichPlayer.PLAYER1);
         boardsPanel.add(player1Buttons);
 
         boardsPanel.add(Box.createRigidArea(new Dimension(120, 300)));
 
-        player2Buttons = new BoardView();
+        player2Buttons = new BoardView(WhichPlayer.PLAYER1);
         boardsPanel.add(player2Buttons);
         boardsPanel.add(Box.createRigidArea(new Dimension(60, 300)));
 
@@ -134,14 +135,27 @@ public class View{
     }
 
     //TODO czy te funkcje powinny być tutaj?
-    public void setSpecificFieldEnabled(int x, int y, Boolean state, BoardView playerButtons){
-        playerButtons.setSpecificFieldEnabled(x,y,state);
+    public void setSpecificFieldEnabled(int x, int y, Boolean state, WhichPlayer player){
+        if(player1Buttons.getPlayer() == player){
+            player1Buttons.setSpecificFieldEnabled(x,y,state);
+        }
+        else{
+            player2Buttons.setSpecificFieldEnabled(x,y,state);
+        }
+
     }
-    public void changeColorOfSpecificField(int x, int y, Color color){
-        player2Buttons.changeColorOfSpecificField(x,y,color); //TODO tempororly player2
+    public void changeColorOfSpecificField(int x, int y, Color color, WhichPlayer player){
+        if(player1Buttons.getPlayer() == player){
+            player1Buttons.changeColorOfSpecificField(x,y,color);
+        }
+        else{
+            player2Buttons.changeColorOfSpecificField(x,y,color);
+        }
+
     }
     public void addFieldsListener(ActionListener listener){
-        player2Buttons.addListenerToFields(listener); //TODO tempororly player2
+        player1Buttons.addListenerToFields(listener);
+        player2Buttons.addListenerToFields(listener);
     }
     public void addResetListener(ActionListener listener){
         resetButton.addActionListener(listener);
@@ -196,5 +210,9 @@ public class View{
 
     public void setPlayer2Buttons(BoardView player2Buttons) {
         this.player2Buttons = player2Buttons;
+    }
+
+    public void displayMessageOnCommunicationLabel(String message){
+        communicationLabel.setText(message);
     }
 }
