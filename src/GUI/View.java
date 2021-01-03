@@ -21,7 +21,7 @@ public class View{
         addComponents(frame, new Color(139, 139, 135));
         setBoardEnabled(false, player1Buttons);
         //setBoardColor(new Color(0,0,0), player2Buttons);
-        changeColorOfSpecificField(2,7,new Color(0,0,0),player2Buttons);
+        //changeColorOfSpecificField(2,7,new Color(0,0,0));
         frame.setSize(840, 650);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -137,11 +137,11 @@ public class View{
     public void setSpecificFieldEnabled(int x, int y, Boolean state, BoardView playerButtons){
         playerButtons.setSpecificFieldEnabled(x,y,state);
     }
-    public void changeColorOfSpecificField(int x, int y, Color color, BoardView playerButtons){
-        playerButtons.changeColorOfSpecificField(x,y,color);
+    public void changeColorOfSpecificField(int x, int y, Color color){
+        player2Buttons.changeColorOfSpecificField(x,y,color); //TODO tempororly player2
     }
     public void addFieldsListener(ActionListener listener){
-        player2Buttons.addListenerToFields(listener);
+        player2Buttons.addListenerToFields(listener); //TODO tempororly player2
     }
     public void addResetListener(ActionListener listener){
         resetButton.addActionListener(listener);
