@@ -83,7 +83,7 @@ public class Controller {
             clicked.add(e.getActionCommand());
             if(game.getState() == GameState.SET_FAZE){
                 if(clicked.size()==2){
-                    this.settingShipGrneral(clicked);
+                    this.settingShipGeneral(clicked);
                     clicked.removeAll(clicked);
                 }
             }
@@ -104,6 +104,7 @@ public class Controller {
             y1 = Integer.parseInt(clicked.get(0).substring(1));
 
             ShipsManagement activeBoardShipManagement; // opposite of game.getTurn
+            ShipsManagement actualPlayer; // equals game.getTurn
             WhichPlayer activeBoardPlayer; // opposite of game.getTurn
 
             //Active board != active player
@@ -111,25 +112,35 @@ public class Controller {
             if(game.getPlayer1().getOwner() == game.getTurn()){
                 activeBoardShipManagement = game.getPlayer2();
                 activeBoardPlayer = WhichPlayer.PLAYER2;
+
             }
             else{
                 activeBoardShipManagement = game.getPlayer1();
                 activeBoardPlayer = WhichPlayer.PLAYER1;
+
             }
 
 
             activeBoardShipManagement.hit(x1,y1);
-            //Boolean result = activeBoardShipManagement.getActionFinishedProperly();
+            Boolean result = activeBoardShipManagement.getActionFinishedSuccessfully();
 
             view.displayMessageOnCommunicationLabel(activeBoardShipManagement.getResultCommunicat());
-            //if(result){
+            if(result){
                 //Success
-                //Put hit on view
-                setHitOnView(x1,y1,activeBoardPlayer);
-            //}
+                //Put hit on view - trafiony zatopiony
+                setHitOnView(x1,y1,activeBoardPlayer,new Color(255, 0, 0));
+                if(activeBoardShipManagement.getShipsContainer().getSize() == 0){
+                    endGame(activeBoardPlayer);
+                }
+
+            }
+            else{
+                setHitOnView(x1,y1,activeBoardPlayer,new Color(0, 255, 238));
+                changeTurnDuringShootingPhase(activeBoardPlayer);
+            }
 
         }
-        private void settingShipGrneral(ArrayList<String > clicked){
+        private void settingShipGeneral(ArrayList<String > clicked){
             int x1,y1,x2,y2;
 
             x1= clicked.get(0).charAt(0)-64;
@@ -160,13 +171,26 @@ public class Controller {
         private void setShipOnView(ShipsManagement actualPlayer, WhichPlayer turn){
             for(Coordinate coor :actualPlayer.getShipsContainer().getLastShip().getCoordinates()){
                 view.changeColorOfSpecificField(coor.getX(),coor.getY(),new Color(0,0,0), turn);
-                view.setSpecificFieldEnabled(coor.getX(),coor.getY(),false, turn);
+                view.setSpecificFieldEnabled(coor.getX(),coor.getY(),false, turn, false);
 
             }
         }
-        private void setHitOnView( int x, int y, WhichPlayer activeBoard){
-            view.changeColorOfSpecificField(x,y,new Color(0, 255, 238), activeBoard);
-            view.setSpecificFieldEnabled(x,y,false, activeBoard);
+        private void setHitOnView( int x, int y, WhichPlayer activeBoard, Color color){
+            view.changeColorOfSpecificField(x,y, color, activeBoard);
+            view.setSpecificFieldEnabled(x,y,false, activeBoard, true);
+        }
+        private void endGame(WhichPlayer looser){
+            game.setState(GameState.END);
+
+            view.displayMessageOnCommunicationLabel("Koniec gry! Wygrał "+game.getTurn());
+            view.setBoardEnabled(false,game.getTurn());
+            view.setBoardEnabled(false,looser);
+        }
+        private void changeTurnDuringShootingPhase(WhichPlayer player){
+            view.setBoardEnabled(false, player);
+            view.setBoardEnabled(true, game.getTurn());
+
+            game.setTurn(player);
         }
     }
 }

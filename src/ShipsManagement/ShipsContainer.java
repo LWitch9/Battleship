@@ -38,6 +38,8 @@ public class ShipsContainer {
     private void removeShip(Ship ship){
         this.shipsCollection.remove(ship);
     }
-
+    public int getSize(){
+        return shipsCollection.size();
+    }
 
 }

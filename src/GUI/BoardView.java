@@ -64,7 +64,13 @@ public class BoardView extends JPanel{
     public void setAllEnabled(Boolean state){
         for(int i = 0; i < size; i++ ){
             for(int j = 0 ; j < size ; j++){
-                boardFieldsCollection.get(i).get(j).setEnabled(state);
+                if(!boardFieldsCollection.get(i).get(j).getStateSetPermanently()){
+                    boardFieldsCollection.get(i).get(j).setEnabled(state);
+                }
+                else{
+                    //Don't change state
+                }
+
             }
         }
     }
@@ -75,8 +81,9 @@ public class BoardView extends JPanel{
             }
         }
     }
-    public void setSpecificFieldEnabled(int x, int y, Boolean state){
+    public void setSpecificFieldEnabled(int x, int y, Boolean state, boolean isStateSetPermanently){
         boardFieldsCollection.get(x-1).get(y-1).setEnabled(state);
+        boardFieldsCollection.get(x-1).get(y-1).setStateSetPermanently(isStateSetPermanently);
     }
     public void changeColorOfSpecificField(int x, int y, Color color){
         boardFieldsCollection.get(x-1).get(y-1).setBackground(color);

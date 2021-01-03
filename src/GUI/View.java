@@ -141,12 +141,12 @@ public class View{
         }
     }
 
-    public void setSpecificFieldEnabled(int x, int y, Boolean state, WhichPlayer player){
+    public void setSpecificFieldEnabled(int x, int y, Boolean state, WhichPlayer player, boolean isStateSetPermanently){
         if(player1Buttons.getPlayer() == player){
-            player1Buttons.setSpecificFieldEnabled(x,y,state);
+            player1Buttons.setSpecificFieldEnabled(x,y,state, isStateSetPermanently);
         }
         else{
-            player2Buttons.setSpecificFieldEnabled(x,y,state);
+            player2Buttons.setSpecificFieldEnabled(x,y,state, isStateSetPermanently);
         }
 
     }
