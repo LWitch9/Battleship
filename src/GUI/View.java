@@ -159,6 +159,7 @@ public class View{
             player2Buttons.changeColorOfSpecificField(x,y,color);
         }
 
+
     }
     public void addFieldsListener(ActionListener listener){
         player1Buttons.addListenerToFields(listener);

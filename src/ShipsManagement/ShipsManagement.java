@@ -1,6 +1,8 @@
 package ShipsManagement;
 
+
 import Controller.Messages;
+
 import Game.WhichPlayer;
 import board.Board;
 import board.Coordinate;
@@ -15,13 +17,17 @@ public class ShipsManagement {
     private Board board;
     private Messages resultCommunicat;
     private Boolean actionFinishedSuccessfully;
+
+
     private final WhichPlayer owner;
 
     public ShipsManagement(WhichPlayer owner) {
         this.owner = owner;
         this.shipsContainer = new ShipsContainer();
         this.possibleSizesOfShips = new ArrayList<String>();
+
         this.resultCommunicat = Messages.NONE;
+
         setPossibleSizesOfShips();
         this.board = new Board();
     }
@@ -49,20 +55,26 @@ public class ShipsManagement {
          * - prepare list of OccupiedCoordinates and add Ship
          *
          * */
+
         resultCommunicat = Messages.NONE;
         actionFinishedSuccessfully = false;
+
 
         boolean lessOrEqualsSize = x1 <= board.getSize() && x2 <= board.getSize() && y1 <= board.getSize() && y2 <= board.getSize();
         boolean moreOrEqualsOne = x1 >= 1 && x2 >= 1 && y1 >= 1 && y2 >= 1;
 
         if( ! ( lessOrEqualsSize && moreOrEqualsOne) ){
+
             //todo DO NOT IMPORTANT IN CASE OF GUI
             //resultCommunicat = "Out of range";
+
         }
         else if(x2 != x1 && y2 !=y1){
             // First condition met
             // Second condition Wrong orientation!
+
             resultCommunicat = Messages.WRONG_ORIENTATION_SET;
+
         }
         else {
             //Second condition met - checking orientation and calculating length
@@ -88,17 +100,21 @@ public class ShipsManagement {
                 }
 
             }
+            System.out.println("Dlugosc statku: "+shipLength);
 
             if(!possibleSizesOfShips.contains(""+shipLength)){
                 if(possibleSizesOfShips.isEmpty()){
+
                     //TODO Do sth that will make resultCommunicat unchangeable after setting all ships
                     //TODO Container/ Enum / or sth else for Messages
                     resultCommunicat = Messages.ALL_SHIPS_SET;
+
                     return;
                 }
 
                 else
                     resultCommunicat = Messages.WRONG_LENGTH;
+
             }
             else {
                 Ship ship;
@@ -110,6 +126,7 @@ public class ShipsManagement {
                 }
 
                 if(ship == null){
+
                     resultCommunicat = Messages.UNAVAILABLE_COORDINATE_SET;
                 }
                 else{
@@ -124,16 +141,19 @@ public class ShipsManagement {
                         System.out.println(i);
                     }
                      */
+
                 }
             }
         }
     }
+
 
     public Boolean getActionFinishedSuccessfully() {
         return actionFinishedSuccessfully;
     }
 
     public Messages getResultCommunicat() {
+
         return resultCommunicat;
     }
 

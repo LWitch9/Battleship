@@ -13,6 +13,7 @@ public class GameManagement {
         this.player2 = new ShipsManagement(WhichPlayer.PLAYER2);
         this.state = GameState.SET_FAZE;
         this.turn = WhichPlayer.PLAYER1;
+
     }
 
     public ShipsManagement getPlayer1() {
@@ -35,7 +36,9 @@ public class GameManagement {
         return turn;
     }
 
+
     public void setTurn(WhichPlayer turn) {
         this.turn = turn;
     }
+
 }

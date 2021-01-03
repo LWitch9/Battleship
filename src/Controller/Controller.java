@@ -2,7 +2,9 @@ package Controller;
 
 import GUI.View;
 import Game.GameManagement;
+
 import Game.GameState;
+
 import Game.WhichPlayer;
 import ShipsManagement.ShipsManagement;
 import board.Coordinate;
@@ -94,6 +96,7 @@ public class Controller {
             //TODO remove
             //System.out.println(e.getActionCommand());
             clicked.add(e.getActionCommand());
+
             if(game.getState() == GameState.SET_FAZE){
                 if(clicked.size()==2){
                     this.settingShipGeneral(clicked);
@@ -183,11 +186,10 @@ public class Controller {
             }
 
         }
-        private void setShipOnView(ShipsManagement actualPlayer, WhichPlayer turn){
-            for(Coordinate coor :actualPlayer.getShipsContainer().getLastShip().getCoordinates()){
-                view.changeColorOfSpecificField(coor.getX(),coor.getY(),new Color(0,0,0), turn);
-                view.setSpecificFieldEnabled(coor.getX(),coor.getY(),false, turn, false);
-
+        private void setShipOnView(ShipsManagement actualPlayer, WhichPlayer turn) {
+            for (Coordinate coor : actualPlayer.getShipsContainer().getLastShip().getCoordinates()) {
+                view.changeColorOfSpecificField(coor.getX(), coor.getY(), new Color(0, 0, 0), turn);
+                view.setSpecificFieldEnabled(coor.getX(), coor.getY(), false, turn, false);
             }
         }
         private void setHitOnView( int x, int y, WhichPlayer activeBoard, Color color){
@@ -206,6 +208,7 @@ public class Controller {
             view.setBoardEnabled(true, game.getTurn());
 
             game.setTurn(player);
+
         }
     }
 }

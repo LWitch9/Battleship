@@ -32,8 +32,8 @@ public class ShipsContainer {
         }
         return Messages.MISS_SHOOT;
     }
-    public Ship getLastShip(){
-        return shipsCollection.get(shipsCollection.size()-1);
+    public Ship getLastShip() {
+        return shipsCollection.get(shipsCollection.size() - 1);
     }
 
     private void removeShip(Ship ship){
