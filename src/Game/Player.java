@@ -1,4 +1,4 @@
-package player;
+package Game;
 
 import ShipsManagement.ShipsManagement;
 
