@@ -17,6 +17,7 @@ public abstract class Coordinate {
         return y;
     }
 
+    @Override
     public String toString(){
         return "" + (char)(x+64) + y;
     }

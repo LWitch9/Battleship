@@ -1,8 +1,8 @@
 package Game;
 
 public enum GameState {
-    SET_FAZE ,
-    SET_FAZE_END_FOR_PLAYER,
-    SHOOT_FAZE,
+    SET_PHASE,
+    SET_PHASE_END_FOR_PLAYER,
+    SHOOT_PHASE,
     END
 }

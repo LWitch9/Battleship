@@ -35,12 +35,14 @@ public class ShipsContainer {
     public Ship getLastShip() {
         return shipsCollection.get(shipsCollection.size() - 1);
     }
+    public int getSize(){
+        return shipsCollection.size();
+    }
 
     private void removeShip(Ship ship){
         this.shipsCollection.remove(ship);
     }
-    public int getSize(){
-        return shipsCollection.size();
-    }
+
+
 
 }

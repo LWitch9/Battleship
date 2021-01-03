@@ -18,20 +18,22 @@ public class Controller {
     private View view ;
     private GameManagement game ;
     private ArrayList<String> clicked;
+    private boolean isTimeForShootFaze;
 
 
     public Controller(View view , GameManagement game) {
+        this.isTimeForShootFaze = false;
         this.clicked = new ArrayList<>();
         this.view = view;
         this.game = game;
         this.viewInit();
     }
 
-    public void viewInit(){
+    private void viewInit(){
         view.setBoardEnabled(false, WhichPlayer.PLAYER2);
-        view.addFieldsListener(new FieldListener());
-        view.addResetListener(new ResetListener());
-        view.addBattleListener(new BattleListener());
+        view.addListenerToFields(new FieldListener());
+        view.addListenerToResetButton(new ResetListener());
+        view.addListenerToBattleButton(new BattleListener());
     }
 
     class ResetListener implements ActionListener {
@@ -41,11 +43,30 @@ public class Controller {
 
             System.out.println("It works finally: Reset");
             //TODO Reset
+            /*
+            * TODO
+            *  change gamestate to SET_FAZE
+            *   change turn to Player1
+            *   remove ShipManagements of Players and replace it with new one
+            *   Reset BoardView
+            * */
+
+            clicked.removeAll(clicked);
+            isTimeForShootFaze = false;
+            game.setPlayer1(new ShipsManagement(WhichPlayer.PLAYER1));
+            game.setPlayer2(new ShipsManagement(WhichPlayer.PLAYER2));
+
+            game.setState(GameState.SET_PHASE);
+            game.setTurn(WhichPlayer.PLAYER1);
+
+            view.resetBoards();
+            view.setBoardEnabled(false,WhichPlayer.PLAYER2);
+            view.displayMessageOnCommunicationLabel("Reset ...");
         }
     }
 
     class BattleListener implements ActionListener{
-        private boolean isTimeForShootFaze = false;
+
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -53,36 +74,39 @@ public class Controller {
             //OO zrób tak: dodać do GameState SET_FaZe_END_FOR_PLAYER - i tylko w tym stanie można wcisnać battle
 
             //Przypadek gdy mozna wcisnąć battle
-            if(game.getState() == GameState.SET_FAZE_END_FOR_PLAYER){
+            if(game.getState() == GameState.SET_PHASE_END_FOR_PLAYER){
                 if(!isTimeForShootFaze){
-                    game.setState(GameState.SET_FAZE);
+                    game.setState(GameState.SET_PHASE);
                     game.setTurn(WhichPlayer.PLAYER2);
 
                     clicked.removeAll(clicked);
                     view.setBoardEnabled(false, WhichPlayer.PLAYER1);
-                    view.setBoardColor(new Color(255,255,255),WhichPlayer.PLAYER1 );
+                    view.changeColorOfBoard(new Color(255,255,255),WhichPlayer.PLAYER1 );
                     view.setBoardEnabled(true, WhichPlayer.PLAYER2);
                     isTimeForShootFaze =true;
+                    view.displayMessageOnCommunicationLabel(""+Messages.WHO_STARTS);
                 }
                 else{
-                    game.setState(GameState.SHOOT_FAZE);
+                    clicked.removeAll(clicked);
+                    game.setState(GameState.SHOOT_PHASE);
                     //TODO losowanie gracza - tymczasowo zaczyna drugi
                     game.setTurn(WhichPlayer.PLAYER2);
 
                     view.setBoardEnabled(false, WhichPlayer.PLAYER2);
-                    view.setBoardColor(new Color(255,255,255),WhichPlayer.PLAYER2 );
+                    view.changeColorOfBoard(new Color(255,255,255),WhichPlayer.PLAYER2 );
                     view.setBoardEnabled(true, WhichPlayer.PLAYER1);
+                    view.displayMessageOnCommunicationLabel(""+Messages.WELCOME+Messages.WHO_STARTS);
                 }
             }
-            else if(game.getState() == GameState.SET_FAZE){
-                view.displayMessageOnCommunicationLabel("Jeszcze nie rozstawiłeś");
+            else if(game.getState() == GameState.SET_PHASE){
+                view.displayMessageOnCommunicationLabel(""+Messages.NOT_ALL_SHIPS_SET);
             }
-            else if(game.getState() == GameState.SHOOT_FAZE){
-                view.displayMessageOnCommunicationLabel("Już strzelasz");
+            else if(game.getState() == GameState.SHOOT_PHASE){
+                view.displayMessageOnCommunicationLabel(""+Messages.ALREADY_IN_BATTLE);
             }
             else{
                 //Komunikat ( najpierw wciśnij reset blah blah)
-                view.displayMessageOnCommunicationLabel("Najpierw zresetuj");
+                view.displayMessageOnCommunicationLabel(""+Messages.END);
             }
 
 
@@ -97,13 +121,13 @@ public class Controller {
             //System.out.println(e.getActionCommand());
             clicked.add(e.getActionCommand());
 
-            if(game.getState() == GameState.SET_FAZE){
+            if(game.getState() == GameState.SET_PHASE){
                 if(clicked.size()==2){
                     this.settingShipGeneral(clicked);
                     clicked.removeAll(clicked);
                 }
             }
-            else if(game.getState() == GameState.SHOOT_FAZE){
+            else if(game.getState() == GameState.SHOOT_PHASE){
                 this.shootingShipGeneral(clicked);
                 clicked.removeAll(clicked);
             }
@@ -177,11 +201,14 @@ public class Controller {
                 //Success
                 //Put ship on view
                 setShipOnView(activeBoard,game.getTurn());
+                //TODO Dodaj coś aby wcześniej zmienić stan game.setState(GameState.SET_FAZE_END_FOR_PLAYER);
+                //Aktualnei stan zmienia się nie bezpośrednio po ustawieniu ostatniego statku
+                //a dopiero po tym jak kolejny raz kliknie się dwukrotnie (co zostanie odczytane jako niepoprawne ustawinie)
 
             }
             else{
                 if(activeBoard.getResultCommunicat() == Messages.ALL_SHIPS_SET){
-                     game.setState(GameState.SET_FAZE_END_FOR_PLAYER);
+                     game.setState(GameState.SET_PHASE_END_FOR_PLAYER);
                 }
             }
 

@@ -16,29 +16,20 @@ public class ShipsManagement {
     private ArrayList<String> possibleSizesOfShips;
     private Board board;
     private Messages resultCommunicat;
-    private Boolean actionFinishedSuccessfully;
-
-
+    private boolean actionFinishedSuccessfully;
     private final WhichPlayer owner;
 
     public ShipsManagement(WhichPlayer owner) {
         this.owner = owner;
         this.shipsContainer = new ShipsContainer();
         this.possibleSizesOfShips = new ArrayList<String>();
-
-        this.resultCommunicat = Messages.NONE;
-
-        setPossibleSizesOfShips();
         this.board = new Board();
+        this.resultCommunicat = Messages.NONE;
+        setPossibleSizesOfShips();
+
     }
 
-    public WhichPlayer getOwner() {
-        return owner;
-    }
 
-    public ShipsContainer getShipsContainer() {
-        return shipsContainer;
-    }
 
     public void setShip(int x1, int y1, int x2, int y2){
 
@@ -100,21 +91,15 @@ public class ShipsManagement {
                 }
 
             }
-            System.out.println("Dlugosc statku: "+shipLength);
+            //System.out.println("Dlugosc statku: "+shipLength);
 
             if(!possibleSizesOfShips.contains(""+shipLength)){
                 if(possibleSizesOfShips.isEmpty()){
-
-                    //TODO Do sth that will make resultCommunicat unchangeable after setting all ships
-                    //TODO Container/ Enum / or sth else for Messages
                     resultCommunicat = Messages.ALL_SHIPS_SET;
-
                     return;
                 }
-
                 else
                     resultCommunicat = Messages.WRONG_LENGTH;
-
             }
             else {
                 Ship ship;
@@ -135,28 +120,19 @@ public class ShipsManagement {
                     possibleSizesOfShips.remove(""+shipLength);
                     shipsContainer.addShip(ship);
                     //TODO remove
-                    //board.showAvailablity();
+                   // board.showAvailablity();
                     /*
                     for(String i : possibleSizesOfShips){
                         System.out.println(i);
                     }
-                     */
+                    */
+
+
 
                 }
             }
         }
     }
-
-
-    public Boolean getActionFinishedSuccessfully() {
-        return actionFinishedSuccessfully;
-    }
-
-    public Messages getResultCommunicat() {
-
-        return resultCommunicat;
-    }
-
     public void hit(int x, int y){
         /*
          * Check:
@@ -182,6 +158,21 @@ public class ShipsManagement {
 
 
     }
+
+    public WhichPlayer getOwner() {
+        return owner;
+    }
+    public ShipsContainer getShipsContainer() {
+        return shipsContainer;
+    }
+    public boolean getActionFinishedSuccessfully() {
+        return actionFinishedSuccessfully;
+    }
+    public Messages getResultCommunicat() {
+
+        return resultCommunicat;
+    }
+
 
     private Ship setVertically(int x, int y1, int diff){
         ArrayList<Coordinate> tmp = new ArrayList<Coordinate>();
