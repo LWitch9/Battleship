@@ -8,10 +8,9 @@ import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class BoardView extends JPanel{
-    //private JPanel panel;
-    private final int size = 10;
-    private ArrayList<ArrayList<Field>> boardFieldsCollection;
 
+    private final int size = 10;
+    private final ArrayList<ArrayList<Field>> boardFieldsCollection;
 
     public BoardView() {
         //panel = new JPanel();

@@ -11,10 +11,12 @@ public class ShipsManagement {
     private ShipsContainer shipsContainer;
     private ArrayList<Integer> possibleSizesOfShips;
     private Board board;
+    private String resultOfAction;
 
     public ShipsManagement() {
         this.shipsContainer = new ShipsContainer();
         this.possibleSizesOfShips = new ArrayList<Integer>();
+        this.resultOfAction = "";
         setPossibleSizesOfShips();
         this.board = new Board();
     }
@@ -34,17 +36,19 @@ public class ShipsManagement {
          * - prepare list of OccupiedCoordinates and add Ship
          *
          * */
+        resultOfAction = "";
+
         boolean lessOrEqualsSize = x1 <= board.getSize() && x2 <= board.getSize() && y1 <= board.getSize() && y2 <= board.getSize();
         boolean moreOrEqualsOne = x1 >= 1 && x2 >= 1 && y1 >= 1 && y2 >= 1;
 
         if( ! ( lessOrEqualsSize && moreOrEqualsOne) ){
             //TODO Out of range
-            System.out.println("Out of range");
+            resultOfAction = "Out of range";
         }
         else if(x2 != x1 && y2 !=y1){
             // First condition met
             // Second condition Wrong orientation!
-            System.out.println("Wrong orientation");
+            resultOfAction = "Wrong orientation";
         }
         else {
             //Second condition met - checking orientation and calculating length
@@ -72,7 +76,7 @@ public class ShipsManagement {
             }
 
             if(!possibleSizesOfShips.contains(shipLength)){
-                System.out.println("Wrong Length");
+                resultOfAction = "Wrong Length";
             }
             else {
                 Ship ship;
@@ -84,10 +88,10 @@ public class ShipsManagement {
                 }
 
                 if(ship == null){
-                    System.out.println("Coordinate unavailable");
+                    resultOfAction = "Coordinate unavailable";
                 }
                 else{
-                    System.out.println("Ship successfully added");
+                    resultOfAction = "Ship successfully added";
                     possibleSizesOfShips.remove(shipLength);
                     shipsContainer.addShip(ship);
                     board.showAvailablity();
@@ -95,6 +99,11 @@ public class ShipsManagement {
             }
         }
     }
+
+    public String getResultOfAction() {
+        return resultOfAction;
+    }
+
     public void hit(int x, int y){
         //TODO
         /*
