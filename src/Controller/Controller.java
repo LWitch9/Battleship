@@ -38,7 +38,7 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
 
             System.out.println("It works finally: Reset");
-            //TODO
+            //TODO Reset
         }
     }
 
@@ -47,30 +47,42 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            System.out.println("It works finally: Battle");
             //TODO dodaj zabezpiecznia ( nie można wcisnąć dopóki nie rozstawione wszystkie statki gracza)
             //OO zrób tak: dodać do GameState SET_FaZe_END_FOR_PLAYER - i tylko w tym stanie można wcisnać battle
 
             //Przypadek gdy mozna wcisnąć battle
-            if(!isTimeForShootFaze){
-                game.setState(GameState.SET_FAZE);
-                game.setTurn(WhichPlayer.PLAYER2);
+            if(game.getState() == GameState.SET_FAZE_END_FOR_PLAYER){
+                if(!isTimeForShootFaze){
+                    game.setState(GameState.SET_FAZE);
+                    game.setTurn(WhichPlayer.PLAYER2);
 
-                clicked.removeAll(clicked);
-                view.setBoardEnabled(false, WhichPlayer.PLAYER1);
-                view.setBoardColor(new Color(255,255,255),WhichPlayer.PLAYER1 );
-                view.setBoardEnabled(true, WhichPlayer.PLAYER2);
-                isTimeForShootFaze =true;
+                    clicked.removeAll(clicked);
+                    view.setBoardEnabled(false, WhichPlayer.PLAYER1);
+                    view.setBoardColor(new Color(255,255,255),WhichPlayer.PLAYER1 );
+                    view.setBoardEnabled(true, WhichPlayer.PLAYER2);
+                    isTimeForShootFaze =true;
+                }
+                else{
+                    game.setState(GameState.SHOOT_FAZE);
+                    //TODO losowanie gracza - tymczasowo zaczyna drugi
+                    game.setTurn(WhichPlayer.PLAYER2);
+
+                    view.setBoardEnabled(false, WhichPlayer.PLAYER2);
+                    view.setBoardColor(new Color(255,255,255),WhichPlayer.PLAYER2 );
+                    view.setBoardEnabled(true, WhichPlayer.PLAYER1);
+                }
+            }
+            else if(game.getState() == GameState.SET_FAZE){
+                view.displayMessageOnCommunicationLabel("Jeszcze nie rozstawiłeś");
+            }
+            else if(game.getState() == GameState.SHOOT_FAZE){
+                view.displayMessageOnCommunicationLabel("Już strzelasz");
             }
             else{
-                game.setState(GameState.SHOOT_FAZE);
-                //TODO losowanie gracza - tymczasowo zaczyna drugi
-                game.setTurn(WhichPlayer.PLAYER2);
-
-                view.setBoardEnabled(false, WhichPlayer.PLAYER2);
-                view.setBoardColor(new Color(255,255,255),WhichPlayer.PLAYER2 );
-                view.setBoardEnabled(true, WhichPlayer.PLAYER1);
+                //Komunikat ( najpierw wciśnij reset blah blah)
+                view.displayMessageOnCommunicationLabel("Najpierw zresetuj");
             }
+
 
         }
     }
@@ -79,7 +91,8 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println(e.getActionCommand());
+            //TODO remove
+            //System.out.println(e.getActionCommand());
             clicked.add(e.getActionCommand());
             if(game.getState() == GameState.SET_FAZE){
                 if(clicked.size()==2){
@@ -91,10 +104,6 @@ public class Controller {
                 this.shootingShipGeneral(clicked);
                 clicked.removeAll(clicked);
             }
-
-
-
-
         }
 
         private void shootingShipGeneral(ArrayList<String > clicked){
@@ -124,7 +133,7 @@ public class Controller {
             activeBoardShipManagement.hit(x1,y1);
             Boolean result = activeBoardShipManagement.getActionFinishedSuccessfully();
 
-            view.displayMessageOnCommunicationLabel(activeBoardShipManagement.getResultCommunicat());
+            view.displayMessageOnCommunicationLabel(""+activeBoardShipManagement.getResultCommunicat());
             if(result){
                 //Success
                 //Put hit on view - trafiony zatopiony
@@ -160,11 +169,17 @@ public class Controller {
             activeBoard.setShip(x1,y1,x2,y2);
             Boolean result = activeBoard.getActionFinishedSuccessfully();
 
-            view.displayMessageOnCommunicationLabel(activeBoard.getResultCommunicat());
+            view.displayMessageOnCommunicationLabel(""+activeBoard.getResultCommunicat());
             if(result){
                 //Success
                 //Put ship on view
                 setShipOnView(activeBoard,game.getTurn());
+
+            }
+            else{
+                if(activeBoard.getResultCommunicat() == Messages.ALL_SHIPS_SET){
+                     game.setState(GameState.SET_FAZE_END_FOR_PLAYER);
+                }
             }
 
         }

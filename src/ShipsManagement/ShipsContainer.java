@@ -1,5 +1,6 @@
 package ShipsManagement;
 
+import Controller.Messages;
 import board.Coordinate;
 
 import java.util.ArrayList;
@@ -14,22 +15,22 @@ public class ShipsContainer {
     public void addShip(Ship ship){
         shipsCollection.add(ship);
     }
-    public String removeCoordinateFromShip(int x, int y){
+    public Messages removeCoordinateFromShip(int x, int y){
         Ship tmp;
         for(Ship ship :shipsCollection){
             if(ship.removeCoordinate(x,y)){
                 if(ship.getShipSize() == 0){
                     //Zatopiony TODO some information about Zatopiony state
                     removeShip(ship);
-                    return "Trafiony Zatopiony!";
+                    return Messages.HIT_SUNK_SHOOT;
                 }
                 else{
                     //Trafiony
-                    return "Trafiony!";
+                    return Messages.HIT_SHOOT;
                 }
             }
         }
-        return "Pudlo";
+        return Messages.MISS_SHOOT;
     }
     public Ship getLastShip(){
         return shipsCollection.get(shipsCollection.size()-1);

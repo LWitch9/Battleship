@@ -1,5 +1,6 @@
 package ShipsManagement;
 
+import Controller.Messages;
 import Game.WhichPlayer;
 import board.Board;
 import board.Coordinate;
@@ -12,7 +13,7 @@ public class ShipsManagement {
     private ShipsContainer shipsContainer;
     private ArrayList<String> possibleSizesOfShips;
     private Board board;
-    private String resultCommunicat;
+    private Messages resultCommunicat;
     private Boolean actionFinishedSuccessfully;
     private final WhichPlayer owner;
 
@@ -20,7 +21,7 @@ public class ShipsManagement {
         this.owner = owner;
         this.shipsContainer = new ShipsContainer();
         this.possibleSizesOfShips = new ArrayList<String>();
-        this.resultCommunicat = "";
+        this.resultCommunicat = Messages.NONE;
         setPossibleSizesOfShips();
         this.board = new Board();
     }
@@ -48,19 +49,20 @@ public class ShipsManagement {
          * - prepare list of OccupiedCoordinates and add Ship
          *
          * */
-        resultCommunicat = "";
+        resultCommunicat = Messages.NONE;
         actionFinishedSuccessfully = false;
 
         boolean lessOrEqualsSize = x1 <= board.getSize() && x2 <= board.getSize() && y1 <= board.getSize() && y2 <= board.getSize();
         boolean moreOrEqualsOne = x1 >= 1 && x2 >= 1 && y1 >= 1 && y2 >= 1;
 
         if( ! ( lessOrEqualsSize && moreOrEqualsOne) ){
-            resultCommunicat = "Out of range";
+            //todo DO NOT IMPORTANT IN CASE OF GUI
+            //resultCommunicat = "Out of range";
         }
         else if(x2 != x1 && y2 !=y1){
             // First condition met
             // Second condition Wrong orientation!
-            resultCommunicat = "Wrong orientation";
+            resultCommunicat = Messages.WRONG_ORIENTATION_SET;
         }
         else {
             //Second condition met - checking orientation and calculating length
@@ -86,17 +88,17 @@ public class ShipsManagement {
                 }
 
             }
-            System.out.println("Dlugosc statku: "+shipLength);
 
             if(!possibleSizesOfShips.contains(""+shipLength)){
                 if(possibleSizesOfShips.isEmpty()){
                     //TODO Do sth that will make resultCommunicat unchangeable after setting all ships
-                    resultCommunicat = "Wszystko rozstawione";
+                    //TODO Container/ Enum / or sth else for Messages
+                    resultCommunicat = Messages.ALL_SHIPS_SET;
                     return;
                 }
 
                 else
-                    resultCommunicat = "Wrong Length";
+                    resultCommunicat = Messages.WRONG_LENGTH;
             }
             else {
                 Ship ship;
@@ -108,17 +110,20 @@ public class ShipsManagement {
                 }
 
                 if(ship == null){
-                    resultCommunicat = "Coordinate unavailable";
+                    resultCommunicat = Messages.UNAVAILABLE_COORDINATE_SET;
                 }
                 else{
-                    resultCommunicat = "Ship successfully added";
+                    resultCommunicat = Messages.SUCCESSFUL_SET;
                     actionFinishedSuccessfully = true;
                     possibleSizesOfShips.remove(""+shipLength);
                     shipsContainer.addShip(ship);
-                    board.showAvailablity();
+                    //TODO remove
+                    //board.showAvailablity();
+                    /*
                     for(String i : possibleSizesOfShips){
                         System.out.println(i);
                     }
+                     */
                 }
             }
         }
@@ -128,7 +133,7 @@ public class ShipsManagement {
         return actionFinishedSuccessfully;
     }
 
-    public String getResultCommunicat() {
+    public Messages getResultCommunicat() {
         return resultCommunicat;
     }
 
@@ -152,7 +157,7 @@ public class ShipsManagement {
             board.setUnavailableCoordinateAt(x,y);
         }
         else{
-            resultCommunicat="Pudlo";
+            resultCommunicat=Messages.MISS_SHOOT;
         }
 
 
