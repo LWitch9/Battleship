@@ -4,6 +4,7 @@ import board.Coordinate;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -23,7 +24,6 @@ public class BoardView extends JPanel{
     private void addButtons() {
         GridLayout layout = new GridLayout(10,10);
         this.setLayout(layout);
-        //TODO get rid of blank spaces between buttons
         for(int i = 0; i < size; i++ ){
             for(int j = 0 ; j < size ; j++){
                 this.add(boardFieldsCollection.get(j).get(i));
@@ -74,6 +74,13 @@ public class BoardView extends JPanel{
     }
     public Field getField(int x, int y){
         return boardFieldsCollection.get(x-1).get(y-1);
+    }
+    public void addListenerToFields(ActionListener listener){
+        for(int i = 0; i < size; i++ ){
+            for(int j = 0 ; j < size ; j++){
+                boardFieldsCollection.get(j).get(i).addActionListener(listener);
+            }
+        }
     }
 
 

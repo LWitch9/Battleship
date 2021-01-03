@@ -1,7 +1,10 @@
 package GUI;
 
+import Controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class View{
     private JPanel mainPanel;
@@ -104,6 +107,7 @@ public class View{
         resetButton.setBackground(componentsColor);
         resetButton.setMargin(new Insets(10,60,10,60));;
 
+
         battleButton = new JButton("Battle!");
         battleButton.setPreferredSize(new Dimension(240,60));
         battleButton.setBackground(componentsColor);
@@ -135,5 +139,62 @@ public class View{
     }
     public void changeColorOfSpecificField(int x, int y, Color color, BoardView playerButtons){
         playerButtons.changeColorOfSpecificField(x,y,color);
+    }
+    public void addFieldsListener(ActionListener listener){
+        player2Buttons.addListenerToFields(listener);
+    }
+    public void addResetListener(ActionListener listener){
+        resetButton.addActionListener(listener);
+    }
+    public void addBattleListener(ActionListener listener){
+        battleButton.addActionListener(listener);
+    }
+
+    public JLabel getPlayer1Label() {
+        return player1Label;
+    }
+
+   public JLabel getPlayer2Label() {
+        return player2Label;
+    }
+
+    public JLabel getCommunicationLabel() {
+        return communicationLabel;
+    }
+
+    public void setCommunicationLabel(JLabel communicationLabel) {
+        this.communicationLabel = communicationLabel;
+    }
+
+    public JButton getResetButton() {
+        return resetButton;
+    }
+
+    public void setResetButton(JButton resetButton) {
+        this.resetButton = resetButton;
+    }
+
+    public JButton getBattleButton() {
+        return battleButton;
+    }
+
+    public void setBattleButton(JButton battleButton) {
+        this.battleButton = battleButton;
+    }
+
+    public BoardView getPlayer1Buttons() {
+        return player1Buttons;
+    }
+
+    public void setPlayer1Buttons(BoardView player1Buttons) {
+        this.player1Buttons = player1Buttons;
+    }
+
+    public BoardView getPlayer2Buttons() {
+        return player2Buttons;
+    }
+
+    public void setPlayer2Buttons(BoardView player2Buttons) {
+        this.player2Buttons = player2Buttons;
     }
 }
