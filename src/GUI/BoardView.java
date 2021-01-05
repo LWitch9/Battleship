@@ -30,14 +30,9 @@ public class BoardView extends JPanel{
     public void resetAll(){
         for(int i = 0; i < size; i++ ){
             for(int j = 0 ; j < size ; j++){
-                if(boardFieldsCollection.get(i).get(j).getStateSetPermanently()){
-                    boardFieldsCollection.get(i).get(j).setStateSetPermanently(false);
-
-                }
+                boardFieldsCollection.get(i).get(j).setStateSetPermanently(false);
                 boardFieldsCollection.get(i).get(j).setEnabled(true);
                 boardFieldsCollection.get(i).get(j).setBackground(new Color(255,255,255));
-
-
             }
         }
     }
