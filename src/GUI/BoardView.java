@@ -37,6 +37,7 @@ public class BoardView extends JPanel{
                 boardFieldsCollection.get(i).get(j).setEnabled(true);
                 boardFieldsCollection.get(i).get(j).setBackground(new Color(255,255,255));
 
+
             }
         }
     }

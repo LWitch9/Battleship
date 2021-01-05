@@ -88,7 +88,9 @@ public class Controller {
                 }
                 else{
                     clicked.removeAll(clicked);
+
                     game.setState(GameState.SHOOT_PHASE);
+
                     //TODO losowanie gracza - tymczasowo zaczyna drugi
                     game.setTurn(WhichPlayer.PLAYER2);
 
