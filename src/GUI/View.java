@@ -1,5 +1,6 @@
 package GUI;
 
+import Controller.Messages;
 import Game.WhichPlayer;
 
 import javax.swing.*;
@@ -19,6 +20,7 @@ public class View{
         this.frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addComponents(frame, new Color(139, 139, 135));
+        displayMessageOnCommunicationLabel(""+Messages.WELCOME);
         frame.setSize(840, 650);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -78,7 +80,7 @@ public class View{
     }
 
     public void displayMessageOnCommunicationLabel(String message){
-        communicationLabel.setText(message);
+        communicationLabel.setText("<html><div style='text-align: center;'>"+message+"</div></html>");
     }
 
     private void addComponents(final JFrame frame, Color componentsColor){
@@ -111,7 +113,7 @@ public class View{
         communicationPanel.setLayout(communicationLayout);
 
         //TODO zawijaj tekst !!
-        communicationLabel = new JLabel("Communication label");
+        communicationLabel = new JLabel();
         communicationLabel.setPreferredSize(new Dimension(720,60));
         communicationLabel.setBackground(componentsColor);
         communicationLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -129,12 +131,12 @@ public class View{
         boardsPanel.setLayout(boardsLayout);
 
         boardsPanel.add(Box.createRigidArea(new Dimension(60, 300)));
-        player1Buttons = new BoardView(WhichPlayer.PLAYER1);
+        player1Buttons = new BoardView(WhichPlayer.GRACZ1);
         boardsPanel.add(player1Buttons);
 
         boardsPanel.add(Box.createRigidArea(new Dimension(120, 300)));
 
-        player2Buttons = new BoardView(WhichPlayer.PLAYER1);
+        player2Buttons = new BoardView(WhichPlayer.GRACZ1);
         boardsPanel.add(player2Buttons);
         boardsPanel.add(Box.createRigidArea(new Dimension(60, 300)));
 

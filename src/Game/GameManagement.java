@@ -9,10 +9,10 @@ public class GameManagement {
     private WhichPlayer turn;
 
     public GameManagement() {
-        this.player1 = new ShipsManagement(WhichPlayer.PLAYER1);
-        this.player2 = new ShipsManagement(WhichPlayer.PLAYER2);
+        this.player1 = new ShipsManagement(WhichPlayer.GRACZ1);
+        this.player2 = new ShipsManagement(WhichPlayer.GRACZ2);
         this.state = GameState.SET_PHASE;
-        this.turn = WhichPlayer.PLAYER1;
+        this.turn = WhichPlayer.GRACZ1;
 
     }
 

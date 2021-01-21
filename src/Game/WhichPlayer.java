@@ -1,6 +1,12 @@
 package Game;
+import java.util.Random;
 
 public enum WhichPlayer {
-    PLAYER1,
-    PLAYER2
+    GRACZ1,
+    GRACZ2;
+
+    public static WhichPlayer getRandomPlayer() {
+        Random random = new Random();
+        return values()[random.nextInt(values().length)];
+    }
 }

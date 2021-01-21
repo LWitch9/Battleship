@@ -4,10 +4,9 @@ import java.util.ArrayList;
 
 public class Board {
     private ArrayList<ArrayList<Coordinate>> board;
-    private final int size;
+    private final int size =10;
 
     public Board() {
-        this.size = 10;
         this.board = new ArrayList<>(size);
         this.init();
     }

@@ -30,7 +30,7 @@ public class Controller {
     }
 
     private void viewInit(){
-        view.setBoardEnabled(false, WhichPlayer.PLAYER2);
+        view.setBoardEnabled(false, WhichPlayer.GRACZ2);
         view.addListenerToFields(new FieldListener());
         view.addListenerToResetButton(new ResetListener());
         view.addListenerToBattleButton(new BattleListener());
@@ -41,26 +41,16 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            System.out.println("It works finally: Reset");
-            //TODO Reset
-            /*
-            * TODO
-            *  change gamestate to SET_FAZE
-            *   change turn to Player1
-            *   remove ShipManagements of Players and replace it with new one
-            *   Reset BoardView
-            * */
-
             clicked.removeAll(clicked);
             isTimeForShootFaze = false;
-            game.setPlayer1(new ShipsManagement(WhichPlayer.PLAYER1));
-            game.setPlayer2(new ShipsManagement(WhichPlayer.PLAYER2));
+            game.setPlayer1(new ShipsManagement(WhichPlayer.GRACZ1));
+            game.setPlayer2(new ShipsManagement(WhichPlayer.GRACZ2));
 
             game.setState(GameState.SET_PHASE);
-            game.setTurn(WhichPlayer.PLAYER1);
+            game.setTurn(WhichPlayer.GRACZ1);
 
             view.resetBoards();
-            view.setBoardEnabled(false,WhichPlayer.PLAYER2);
+            view.setBoardEnabled(false,WhichPlayer.GRACZ2);
             view.displayMessageOnCommunicationLabel("Reset ...");
         }
     }
@@ -70,19 +60,16 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            //TODO dodaj zabezpiecznia ( nie można wcisnąć dopóki nie rozstawione wszystkie statki gracza)
-            //OO zrób tak: dodać do GameState SET_FaZe_END_FOR_PLAYER - i tylko w tym stanie można wcisnać battle
-
             //Przypadek gdy mozna wcisnąć battle
             if(game.getState() == GameState.SET_PHASE_END_FOR_PLAYER){
                 if(!isTimeForShootFaze){
                     game.setState(GameState.SET_PHASE);
-                    game.setTurn(WhichPlayer.PLAYER2);
+                    game.setTurn(WhichPlayer.GRACZ2);
 
                     clicked.removeAll(clicked);
-                    view.setBoardEnabled(false, WhichPlayer.PLAYER1);
-                    view.changeColorOfBoard(new Color(255,255,255),WhichPlayer.PLAYER1 );
-                    view.setBoardEnabled(true, WhichPlayer.PLAYER2);
+                    view.setBoardEnabled(false, WhichPlayer.GRACZ1);
+                    view.changeColorOfBoard(new Color(255,255,255),WhichPlayer.GRACZ1);
+                    view.setBoardEnabled(true, WhichPlayer.GRACZ2);
                     isTimeForShootFaze =true;
                     view.displayMessageOnCommunicationLabel(""+Messages.WHO_STARTS);
                 }
@@ -91,13 +78,21 @@ public class Controller {
 
                     game.setState(GameState.SHOOT_PHASE);
 
-                    //TODO losowanie gracza - tymczasowo zaczyna drugi
-                    game.setTurn(WhichPlayer.PLAYER2);
+                    WhichPlayer tmp = WhichPlayer.getRandomPlayer();
+                    WhichPlayer opposite;
+                    if(tmp == WhichPlayer.GRACZ1){
+                        opposite = WhichPlayer.GRACZ2;
+                    }
+                    else{
+                        opposite = WhichPlayer.GRACZ1;
+                    }
+                    game.setTurn(tmp);
 
-                    view.setBoardEnabled(false, WhichPlayer.PLAYER2);
-                    view.changeColorOfBoard(new Color(255,255,255),WhichPlayer.PLAYER2 );
-                    view.setBoardEnabled(true, WhichPlayer.PLAYER1);
-                    view.displayMessageOnCommunicationLabel(""+Messages.WELCOME+Messages.WHO_STARTS);
+                    view.setBoardEnabled(false, tmp);
+                    view.changeColorOfBoard(new Color(255,255,255),tmp);
+                    view.changeColorOfBoard(new Color(255,255,255),opposite);
+                    view.setBoardEnabled(true, opposite);
+                    view.displayMessageOnCommunicationLabel(""+Messages.SHOOT_WELCOME+"<br>"+Messages.WHO_STARTS+" "+tmp);
                 }
             }
             else if(game.getState() == GameState.SET_PHASE){
@@ -108,7 +103,7 @@ public class Controller {
             }
             else{
                 //Komunikat ( najpierw wciśnij reset blah blah)
-                view.displayMessageOnCommunicationLabel(""+Messages.END);
+                view.displayMessageOnCommunicationLabel(""+Messages.END+" "+game.getTurn()+"<br>"+Messages.PLAY_AGAIN);
             }
 
 
@@ -149,12 +144,12 @@ public class Controller {
 
             if(game.getPlayer1().getOwner() == game.getTurn()){
                 activeBoardShipManagement = game.getPlayer2();
-                activeBoardPlayer = WhichPlayer.PLAYER2;
+                activeBoardPlayer = WhichPlayer.GRACZ2;
 
             }
             else{
                 activeBoardShipManagement = game.getPlayer1();
-                activeBoardPlayer = WhichPlayer.PLAYER1;
+                activeBoardPlayer = WhichPlayer.GRACZ1;
 
             }
 
@@ -208,11 +203,10 @@ public class Controller {
                 //a dopiero po tym jak kolejny raz kliknie się dwukrotnie (co zostanie odczytane jako niepoprawne ustawinie)
 
             }
-            else{
                 if(activeBoard.getResultCommunicat() == Messages.ALL_SHIPS_SET){
                      game.setState(GameState.SET_PHASE_END_FOR_PLAYER);
                 }
-            }
+
 
         }
         private void setShipOnView(ShipsManagement actualPlayer, WhichPlayer turn) {
@@ -228,7 +222,7 @@ public class Controller {
         private void endGame(WhichPlayer looser){
             game.setState(GameState.END);
 
-            view.displayMessageOnCommunicationLabel("Koniec gry! Wygrał "+game.getTurn());
+            view.displayMessageOnCommunicationLabel(""+Messages.END+" "+game.getTurn()+"<br>"+Messages.PLAY_AGAIN);
             view.setBoardEnabled(false,game.getTurn());
             view.setBoardEnabled(false,looser);
         }

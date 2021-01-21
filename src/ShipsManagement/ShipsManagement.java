@@ -54,6 +54,11 @@ public class ShipsManagement {
         boolean lessOrEqualsSize = x1 <= board.getSize() && x2 <= board.getSize() && y1 <= board.getSize() && y2 <= board.getSize();
         boolean moreOrEqualsOne = x1 >= 1 && x2 >= 1 && y1 >= 1 && y2 >= 1;
 
+        if(possibleSizesOfShips.isEmpty()){
+            resultCommunicat = Messages.ALL_SHIPS_SET;
+            return;
+        }
+
         if( ! ( lessOrEqualsSize && moreOrEqualsOne) ){
 
             //todo DO NOT IMPORTANT IN CASE OF GUI
@@ -115,10 +120,16 @@ public class ShipsManagement {
                     resultCommunicat = Messages.UNAVAILABLE_COORDINATE_SET;
                 }
                 else{
-                    resultCommunicat = Messages.SUCCESSFUL_SET;
+
                     actionFinishedSuccessfully = true;
                     possibleSizesOfShips.remove(""+shipLength);
                     shipsContainer.addShip(ship);
+                    resultCommunicat = Messages.SUCCESSFUL_SET;
+
+                    if(possibleSizesOfShips.isEmpty()){
+                        resultCommunicat = Messages.ALL_SHIPS_SET;
+                        return;
+                    }
                     //TODO remove
                    // board.showAvailablity();
                     /*
