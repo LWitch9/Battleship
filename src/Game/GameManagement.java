@@ -48,4 +48,12 @@ public class GameManagement {
     public void setPlayer2(ShipsManagement player2) {
         this.player2 = player2;
     }
+
+    public void reset(){
+        this.setPlayer1(new ShipsManagement(WhichPlayer.GRACZ1));
+        this.setPlayer2(new ShipsManagement(WhichPlayer.GRACZ2));
+
+        this.setState(GameState.SET_PHASE);
+        this.setTurn(WhichPlayer.GRACZ1);
+    }
 }

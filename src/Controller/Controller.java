@@ -43,11 +43,7 @@ public class Controller {
 
             clicked.removeAll(clicked);
             isTimeForShootFaze = false;
-            game.setPlayer1(new ShipsManagement(WhichPlayer.GRACZ1));
-            game.setPlayer2(new ShipsManagement(WhichPlayer.GRACZ2));
-
-            game.setState(GameState.SET_PHASE);
-            game.setTurn(WhichPlayer.GRACZ1);
+            game.reset();
 
             view.resetBoards();
             view.setBoardEnabled(false,WhichPlayer.GRACZ2);
@@ -162,7 +158,7 @@ public class Controller {
                 //Success
                 //Put hit on view - trafiony zatopiony
                 setHitOnView(x1,y1,activeBoardPlayer,new Color(255, 0, 0));
-                if(activeBoardShipManagement.getShipsContainer().getSize() == 0){
+                if(activeBoardShipManagement.getResultCommunicat() == Messages.END){
                     endGame(activeBoardPlayer);
                 }
 

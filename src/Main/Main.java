@@ -3,7 +3,6 @@ package Main;
 import Controller.Controller;
 import GUI.View;
 import Game.GameManagement;
-import Game.WhichPlayer;
 
 public class Main {
 

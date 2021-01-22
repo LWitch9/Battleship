@@ -162,6 +162,9 @@ public class ShipsManagement {
             actionFinishedSuccessfully = true;
             resultCommunicat = shipsContainer.removeCoordinateFromShip(x,y);
             board.setUnavailableCoordinateAt(x,y);
+            if(this.getShipsContainer().getSize() == 0){
+                resultCommunicat = Messages.END;
+            }
         }
         else{
             resultCommunicat=Messages.MISS_SHOOT;
