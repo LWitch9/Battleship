@@ -161,9 +161,6 @@ public class Tests {
         assertEquals(Messages.END,sm.getResultCommunicat());
     }
 
-
-
-    //Reset Button
     private ShipsManagement settingUpForOnePlayer(WhichPlayer player){
         ShipsManagement sm = new ShipsManagement(player);
         //Ships of length 1
@@ -187,14 +184,7 @@ public class Tests {
 
         return sm;
     }
-    private Controller settingUpGame(){
-        View view = new View();
-        GameManagement game = new GameManagement();
-        game.setPlayer1(this.settingUpForOnePlayer(WhichPlayer.GRACZ1));
-        game.setPlayer2(this.settingUpForOnePlayer(WhichPlayer.GRACZ2));
 
-        return new Controller(view, game);
-    }
 
 
 }

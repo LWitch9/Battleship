@@ -130,15 +130,6 @@ public class ShipsManagement {
                         resultCommunicat = Messages.ALL_SHIPS_SET;
                         return;
                     }
-                    //TODO remove
-                   // board.showAvailablity();
-                    /*
-                    for(String i : possibleSizesOfShips){
-                        System.out.println(i);
-                    }
-                    */
-
-
 
                 }
             }

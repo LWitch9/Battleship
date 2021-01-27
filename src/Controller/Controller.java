@@ -67,7 +67,7 @@ public class Controller {
                     view.changeColorOfBoard(new Color(255,255,255),WhichPlayer.GRACZ1);
                     view.setBoardEnabled(true, WhichPlayer.GRACZ2);
                     isTimeForShootFaze =true;
-                    view.displayMessageOnCommunicationLabel(""+Messages.WHO_STARTS);
+                    view.displayMessageOnCommunicationLabel("Rozstawia: "+game.getTurn());
                 }
                 else{
                     clicked.removeAll(clicked);
@@ -88,7 +88,7 @@ public class Controller {
                     view.changeColorOfBoard(new Color(255,255,255),tmp);
                     view.changeColorOfBoard(new Color(255,255,255),opposite);
                     view.setBoardEnabled(true, opposite);
-                    view.displayMessageOnCommunicationLabel(""+Messages.SHOOT_WELCOME+"<br>"+Messages.WHO_STARTS+" "+tmp);
+                    view.displayMessageOnCommunicationLabel(""+Messages.SHOOT_WELCOME+"<br>"+Messages.WHO_STARTS+" "+game.getTurn());
                 }
             }
             else if(game.getState() == GameState.SET_PHASE){

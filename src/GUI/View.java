@@ -112,7 +112,6 @@ public class View{
         LayoutManager communicationLayout = new BoxLayout(communicationPanel, BoxLayout.X_AXIS);
         communicationPanel.setLayout(communicationLayout);
 
-        //TODO zawijaj tekst !!
         communicationLabel = new JLabel();
         communicationLabel.setPreferredSize(new Dimension(720,60));
         communicationLabel.setBackground(componentsColor);
